@@ -1427,12 +1427,12 @@
   <div class="nav-inner">
     <span class="nav-brand"><span>Andrea's</span> Arangettam</a>
     <ul class="nav-links">
-      <li><span class="nav-link" onclick="scrollTo('about')">Bharatanatyam</span></li>
-      <li><span class="nav-link" onclick="scrollTo('guru')">Guru</span></li>
-      <li><span class="nav-link" onclick="scrollTo('shishya')">Shishya</span></li>
-      <li><span class="nav-link" onclick="scrollTo('gallery')">Gallery</span></li>
-      <li><span class="nav-link" onclick="scrollTo('thanks')">Thanks</span></li>
-      <li><span class="nav-link" onclick="scrollTo('rsvp')">RSVP</span></li>
+      <li><span class="nav-link" onclick="navScrollTo('about')">Bharatanatyam</span></li>
+      <li><span class="nav-link" onclick="navScrollTo('guru')">Guru</span></li>
+      <li><span class="nav-link" onclick="navScrollTo('shishya')">Shishya</span></li>
+      <li><span class="nav-link" onclick="navScrollTo('gallery')">Gallery</span></li>
+      <li><span class="nav-link" onclick="navScrollTo('thanks')">Thanks</span></li>
+      <li><span class="nav-link" onclick="navScrollTo('rsvp')">RSVP</span></li>
     </ul>
     <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -1443,12 +1443,12 @@
 <!-- Mobile drawer -->
 <nav class="nav-drawer" id="navDrawer" aria-hidden="true">
   <ul>
-    <li><span class="mobile-nav-link" onclick="scrollTo('about');closeNav()">Bharatanatyam</span></li>
-    <li><span class="mobile-nav-link" onclick="scrollTo('guru');closeNav()">Guru</span></li>
-    <li><span class="mobile-nav-link" onclick="scrollTo('shishya');closeNav()">Shishya</span></li>
-    <li><span class="mobile-nav-link" onclick="scrollTo('gallery');closeNav()">Gallery</span></li>
-    <li><span class="mobile-nav-link" onclick="scrollTo('thanks');closeNav()">Special Thanks</span></li>
-    <li><span class="mobile-nav-link" onclick="scrollTo('rsvp');closeNav()">RSVP</span></li>
+    <li><span class="mobile-nav-link" onclick="navScrollTo('about');closeNav()">Bharatanatyam</span></li>
+    <li><span class="mobile-nav-link" onclick="navScrollTo('guru');closeNav()">Guru</span></li>
+    <li><span class="mobile-nav-link" onclick="navScrollTo('shishya');closeNav()">Shishya</span></li>
+    <li><span class="mobile-nav-link" onclick="navScrollTo('gallery');closeNav()">Gallery</span></li>
+    <li><span class="mobile-nav-link" onclick="navScrollTo('thanks');closeNav()">Special Thanks</span></li>
+    <li><span class="mobile-nav-link" onclick="navScrollTo('rsvp');closeNav()">RSVP</span></li>
   </ul>
 </nav>
 
@@ -2044,7 +2044,7 @@
 <script>
 
 /* ── Nav smooth scroll helper ──────────────────── */
-function scrollTo(sectionId) {
+function navScrollTo(sectionId) {
   var el = document.getElementById(sectionId);
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }

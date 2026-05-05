@@ -2285,85 +2285,6 @@ if (rsvpChip && heroSec) {
   }, { threshold: 0.1 }).observe(heroSec);
 }
 
-/* ── Ambient music player — auto-plays at low volume on load ── */
-(function() {
-  const audio     = document.getElementById('bg-music');
-  const btn       = document.getElementById('music-btn');
-  const playIcon  = document.getElementById('icon-play');
-  const pauseIcon = document.getElementById('icon-pause');
-  const volSlider = document.getElementById('music-vol');
-  const wave      = document.getElementById('sound-wave');
-  const player    = document.getElementById('music-player');
-
-  if (!audio || !btn) return;
-
-  // Very low ambient volume (0.08 = ~8%)
-  const AMBIENT_VOL = 0.08;
-  audio.volume = AMBIENT_VOL;
-
-  function setPlaying() {
-    playIcon.style.display  = 'none';
-    pauseIcon.style.display = 'block';
-    wave.classList.add('playing');
-    btn.setAttribute('aria-label', 'Pause music');
-  }
-  function setPaused() {
-    playIcon.style.display  = 'block';
-    pauseIcon.style.display = 'none';
-    wave.classList.remove('playing');
-    btn.setAttribute('aria-label', 'Play music');
-  }
-
-  // Update volume slider gradient fill
-  function updateVol(val) {
-    if (volSlider) volSlider.style.setProperty('--vol', Math.round(val * 100) + '%');
-  }
-  updateVol(AMBIENT_VOL);
-
-  // Show player after 1s
-  setTimeout(() => player && player.classList.add('visible'), 1000);
-
-  // Auto-play on first user interaction anywhere on the page
-  function tryAutoplay() {
-    if (!audio.paused) return; // already playing
-    audio.play().then(() => {
-      setPlaying();
-    }).catch(() => {/* blocked — user can click the button */});
-  }
-
-  // Attempt on page load (works in some browsers)
-  document.addEventListener('DOMContentLoaded', function() {
-    audio.play().then(() => {
-      setPlaying();
-    }).catch(() => {
-      // If blocked, try on first user gesture
-      document.addEventListener('click',    tryAutoplay, { once: true });
-      document.addEventListener('touchend', tryAutoplay, { once: true });
-      document.addEventListener('keydown',  tryAutoplay, { once: true });
-    });
-  });
-
-  // Manual play/pause button
-  btn.addEventListener('click', function(e) {
-    e.stopPropagation(); // don't trigger the tryAutoplay listener
-    if (audio.paused) {
-      audio.play().then(setPlaying).catch(() => {});
-    } else {
-      audio.pause();
-      setPaused();
-    }
-  });
-
-  // Volume slider
-  if (volSlider) {
-    volSlider.addEventListener('input', function() {
-      const v = parseFloat(this.value);
-      audio.volume = v;
-      updateVol(v);
-    });
-  }
-})();
-
 
 /* ── Gallery Lightbox ─────────────────────────── */
 (function() {
@@ -2463,43 +2384,6 @@ if (rsvpChip && heroSec) {
 })();
 
 </script>
-
-
-<!-- ═══════ AMBIENT MUSIC PLAYER ═══════ -->
-<audio id="bg-music" loop preload="auto">
-  <source src="music.mp3" type="audio/mpeg" />
-</audio>
-
-<div id="music-player" role="region" aria-label="Ambient music player">
-  <button id="music-btn" aria-label="Play ambient music" title="Play / Pause">
-    <!-- Play icon (default) -->
-    <svg id="icon-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-      <polygon points="5,3 19,12 5,21"/>
-    </svg>
-    <!-- Pause icon (hidden by default) -->
-    <svg id="icon-pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display:none;">
-      <rect x="6"  y="4" width="4" height="16" rx="1"/>
-      <rect x="14" y="4" width="4" height="16" rx="1"/>
-    </svg>
-  </button>
-
-  <div class="sound-wave" id="sound-wave">
-    <span></span><span></span><span></span>
-  </div>
-
-  <div class="music-info">
-    <span class="music-title">Morning Ragas</span>
-    <span class="music-artist">B. Sivaramakrishna Rao · Sitar</span>
-  </div>
-
-  <div class="music-vol-wrap" title="Volume">
-    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-      <path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>
-    </svg>
-    <input type="range" id="music-vol" min="0" max="1" step="0.05" value="0.3" aria-label="Volume" />
-  </div>
-</div>
 
 <!-- Floating RSVP chip -->
 <a href="https://evite.me/2Zmtxaw6NR" target="_blank" rel="noopener noreferrer" id="rsvp-chip" aria-label="RSVP Now">
